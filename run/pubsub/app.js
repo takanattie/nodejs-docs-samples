@@ -15,6 +15,7 @@ app.use(express.json());
 // [START cloudrun_pubsub_handler]
 // [START run_pubsub_handler]
 app.post('/', (req, res) => {
+  console.log('Start!!!');
   if (!req.body) {
     const msg = 'no Pub/Sub message received';
     console.error(`error: ${msg}`);
@@ -28,6 +29,15 @@ app.post('/', (req, res) => {
     return;
   }
 
+  console.log('Wait...');
+  // Copy from https://hirooooo-lab.com/development/javascript-sleep/
+  const d1 = new Date();
+  while (true) {
+    const d2 = new Date();
+    if (d2 - d1 > 30000) {
+      break;
+    }
+  }
   const pubSubMessage = req.body.message;
   const name = pubSubMessage.data
     ? Buffer.from(pubSubMessage.data, 'base64').toString().trim()
